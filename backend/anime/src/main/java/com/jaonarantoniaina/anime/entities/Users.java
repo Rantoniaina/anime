@@ -1,5 +1,6 @@
 package com.jaonarantoniaina.anime.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler"})
 public class Users implements Serializable {
     @Id
     @GeneratedValue
@@ -26,19 +28,6 @@ public class Users implements Serializable {
     private byte[] photo;
     @OneToMany(mappedBy = "users")
     private List<AnimeCharacter> characters;
-
-    public Users() {
-    }
-
-    public Users(Long idUsers, String firstName, String lastName, String mail, String password, byte[] photo, List<AnimeCharacter> characters) {
-        this.idUsers = idUsers;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mail = mail;
-        this.password = password;
-        this.photo = photo;
-        this.characters = characters;
-    }
 
     public Long getIdUsers() {
         return idUsers;

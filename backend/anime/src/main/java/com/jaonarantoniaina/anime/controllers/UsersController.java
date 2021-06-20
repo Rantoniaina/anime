@@ -42,7 +42,7 @@ public class UsersController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestParam(name = "mail") String mail, @RequestParam(name = "password") String password) {
-        if (StringUtils.hasText(mail) || StringUtils.hasText(password)) {
+        if (!StringUtils.hasText(mail) || !StringUtils.hasText(password)) {
             return ResponseEntity.badRequest().body("Cannot login with empty user mail or password");
         }
         Users authenticatedUser = userRepository.findByMailAndPassword(mail, password);

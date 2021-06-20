@@ -1,9 +1,20 @@
 package com.jaonarantoniaina.anime.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler"})
 public class AnimeCharacter implements Serializable {
     @Id
     @GeneratedValue
@@ -17,19 +28,6 @@ public class AnimeCharacter implements Serializable {
     @ManyToOne
     @JoinColumn(name = "idUsers")
     private Users users;
-
-    public AnimeCharacter() {
-    }
-
-    public AnimeCharacter(Long idAnime, String animeName, String category, String strength, byte[] photo, boolean shared, Users users) {
-        this.idAnime = idAnime;
-        this.animeName = animeName;
-        this.category = category;
-        this.strength = strength;
-        this.photo = photo;
-        this.shared = shared;
-        this.users = users;
-    }
 
     public Long getIdAnime() {
         return idAnime;
