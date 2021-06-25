@@ -1,3 +1,3 @@
 export class AppSettings {
-  public static APP_URL = 'localhost:8080/v1';
+  public static APP_URL = 'http://localhost:8080/v1';
 }

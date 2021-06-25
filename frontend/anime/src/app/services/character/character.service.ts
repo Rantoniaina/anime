@@ -10,11 +10,13 @@ export class CharacterService {
   constructor(private http: HttpClient) {}
 
   findAllCharacters() {
-    return this.http.get(AppSettings.APP_URL + '/animes/');
+    return this.http.get<Character>(AppSettings.APP_URL + '/animes/');
   }
 
   findCharacterById(idCharacter: number) {
-    return this.http.get(AppSettings.APP_URL + '/animes/' + idCharacter);
+    return this.http.get<Character>(
+      AppSettings.APP_URL + '/animes/' + idCharacter
+    );
   }
 
   saveCharacter(character: Character) {
@@ -22,7 +24,7 @@ export class CharacterService {
   }
 
   shareCharacter(idCharacter: number, isShared: boolean) {
-    return this.http.get(
+    return this.http.get<Character>(
       AppSettings.APP_URL + '/animes/share/' + idCharacter + '/' + isShared
     );
   }

@@ -22,9 +22,11 @@ export class UserService {
   }
 
   login(mail: string, password: string) {
-    let params = new HttpParams();
-    params.append('mail', mail);
-    params.append('password', password);
-    return this.http.post(AppSettings.APP_URL + '/users/login', params);
+    return this.http.post(AppSettings.APP_URL + '/users/login', null, {
+      params: {
+        mail,
+        password,
+      },
+    });
   }
 }
