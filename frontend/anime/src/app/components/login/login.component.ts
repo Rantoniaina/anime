@@ -34,10 +34,21 @@ export class LoginComponent implements OnInit {
     this.userService
       .login(this.login?.value, this.password?.value)
       .pipe()
-      .subscribe((data) => {
-        localStorage.setItem('currentUser', JSON.stringify(data));
-        this.router.navigate(['home']);
-      });
+      .subscribe(
+        (data) => {
+          localStorage.setItem('currentUser', JSON.stringify(data));
+          this.router.navigate(['home']);
+        },
+        (error) => {
+          if (error.status === 404) {
+            this.errorMessage =
+              'No user was found with the following email/password';
+          }
+          if (error.status === 400) {
+            this.errorMessage = 'Mail and/or password is incorrect';
+          }
+        }
+      );
   }
 
   get login() {

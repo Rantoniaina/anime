@@ -13,6 +13,12 @@ export class CharacterService {
     return this.http.get<Character>(AppSettings.APP_URL + '/animes/');
   }
 
+  findAllUserCharacters(idUser: number) {
+    return this.http.get<Character[]>(
+      AppSettings.APP_URL + '/animes/' + idUser
+    );
+  }
+
   findCharacterById(idCharacter: number) {
     return this.http.get<Character>(
       AppSettings.APP_URL + '/animes/' + idCharacter

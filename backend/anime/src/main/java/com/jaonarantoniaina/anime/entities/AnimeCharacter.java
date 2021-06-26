@@ -1,5 +1,6 @@
 package com.jaonarantoniaina.anime.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class AnimeCharacter implements Serializable {
     @Lob
     private byte[] photo;
     private boolean shared;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idUsers")
     private Users users;

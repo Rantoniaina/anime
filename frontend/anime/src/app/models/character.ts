@@ -1,6 +1,6 @@
 export class Character {
   idCharacter: number;
-  characterName: string;
+  animeName: string;
   category: string;
   strengh: string;
   shared: boolean;

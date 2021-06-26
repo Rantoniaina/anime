@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SubscribeComponent } from './components/subscribe/subscribe.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SubscribeComponent],
+  declarations: [AppComponent, LoginComponent, SubscribeComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
