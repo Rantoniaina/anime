@@ -1,5 +1,5 @@
 export class Character {
-  idCharacter: number;
+  idAnime: number;
   animeName: string;
   category: string;
   strengh: string;

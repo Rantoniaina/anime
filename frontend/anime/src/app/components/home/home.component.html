@@ -12,15 +12,26 @@
     </nav>
   </div>
   <br />
-  <div class="container-fluid card-deck">
-    <div class="card" *ngFor="let car of animeCharacters">
-      <img src="..." class="card-img-top" alt="..." />
+  <div class="row">
+    <div
+      class="card"
+      *ngFor="let car of animeCharacters"
+      style="width: 18rem; margin-right: 30px"
+    >
+      <div class="card-header bg-transparent">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-secondary">Edit</button>
+          <button type="button" class="btn btn-secondary">Delete</button>
+          <button type="button" class="btn btn-secondary">Share</button>
+        </div>
+      </div>
+      <img
+        src="http://localhost:8080/v1/photo/character/{{ car.idAnime }}"
+        class="card-img-top"
+      />
       <div class="card-body">
         <h5 class="card-title">{{ car.animeName }}</h5>
-        <p class="card-text">{{ car.category }}</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
+        <span class="badge badge-pill badge-primary">{{ car.category }}</span>
       </div>
     </div>
   </div>
