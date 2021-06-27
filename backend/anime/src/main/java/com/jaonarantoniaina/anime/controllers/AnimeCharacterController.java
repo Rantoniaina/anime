@@ -1,21 +1,50 @@
 package com.jaonarantoniaina.anime.controllers;
 
 import com.jaonarantoniaina.anime.entities.AnimeCharacter;
+import com.jaonarantoniaina.anime.entities.Users;
 import com.jaonarantoniaina.anime.repositories.IAnimeCharacter;
+import com.jaonarantoniaina.anime.repositories.IUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/v1/animes")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AnimeCharacterController {
 
     @Autowired
     private IAnimeCharacter animeCharacterRepository;
+    @Autowired
+    private IUser userRepository;
 
     @GetMapping("/")
     public ResponseEntity findAll() {
         return ResponseEntity.ok(animeCharacterRepository.findAll());
+    }
+
+    @GetMapping("/{idUser}")
+    public ResponseEntity findAllUserCharacters(@PathVariable(name = "idUser") Long idUser) {
+        if (idUser == null) {
+            return ResponseEntity.badRequest().body("Cannot find anime with null user");
+        }
+            Optional<Users> users = userRepository.findById(idUser);
+        if (users.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        List<Users> usersList = new ArrayList<>();
+        usersList.add(users.get());
+        List<AnimeCharacter> userCharacters = animeCharacterRepository.findByUsers(users.get());
+        List<AnimeCharacter> sharedCharacters = animeCharacterRepository.findBySharedAndUsersIsNotIn(true, usersList);
+        userCharacters.forEach(userCharacter -> userCharacter.setIdOwner(idUser));
+        sharedCharacters.forEach(sharedCharacter -> sharedCharacter.setIdOwner(-1L));
+        userCharacters.addAll(sharedCharacters);
+
+        return ResponseEntity.ok(userCharacters);
     }
 
     @GetMapping("/idAnime")
@@ -60,7 +89,7 @@ public class AnimeCharacterController {
         if (animeCharacter == null) {
             return ResponseEntity.notFound().build();
         }
-        animeCharacter.setShared(isShared);
+        animeCharacter.setShared(!isShared);
         return ResponseEntity.ok(animeCharacterRepository.save(animeCharacter));
     }
 }

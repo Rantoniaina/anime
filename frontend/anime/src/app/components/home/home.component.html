@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="container">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img
+          src="http://localhost:8080/v1/photo/users/{{ user.idUsers }}"
+          width="50"
+          height="50"
+          class="d-inline-block align-top"
+        />
+        {{ user.firstName }}&nbsp; {{ user.lastName }}
+      </a>
+    </nav>
+  </div>
+  <br />
+  <div class="row">
+    <input type="text" class="form-control" placeholder="Search" />
+  </div>
+  <div class="row">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page">
+          <a href="#">Add new character</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <br />
+  <div class="row" *ngIf="errorMessage">
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+  <div class="row" *ngIf="successMessage">
+    <div class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="card"
+      *ngFor="let car of animeCharacters"
+      style="width: 18rem; margin-right: 30px"
+    >
+      <div *ngIf="car.idOwner !== -1">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-link">Edit</button>
+          <button type="button" class="btn btn-link">Remove</button>
+          <button
+            type="button"
+            class="btn btn-link"
+            *ngIf="car.shared === false"
+            (click)="shareCharacter(car.idAnime, car.shared)"
+          >
+            Share
+          </button>
+          <button
+            type="button"
+            class="btn btn-link"
+            *ngIf="car.shared === true"
+            (click)="shareCharacter(car.idAnime, car.shared)"
+          >
+            Unshare
+          </button>
+        </div>
+      </div>
+      <div class="card-header bg-transparent" *ngIf="car.idOwner === -1">
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-block btn-link"
+        >
+          Shared
+        </button>
+      </div>
+      <img
+        src="http://localhost:8080/v1/photo/character/{{ car.idAnime }}"
+        class="card-img-top"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ car.animeName }}</h5>
+        <p class="card-text">{{ car.legend }}</p>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-pill badge-warning">{{ car.category }}</span>
+      </div>
+    </div>
+  </div>
+</div>

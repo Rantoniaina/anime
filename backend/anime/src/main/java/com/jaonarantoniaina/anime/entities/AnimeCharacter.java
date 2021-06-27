@@ -1,5 +1,6 @@
 package com.jaonarantoniaina.anime.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,11 +21,15 @@ public class AnimeCharacter implements Serializable {
     @GeneratedValue
     private Long idAnime;
     private String animeName;
+    private String legend;
     private String category;
     private String strength;
     @Lob
     private byte[] photo;
     private boolean shared;
+    @Transient
+    private Long idOwner;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idUsers")
     private Users users;
@@ -83,5 +88,21 @@ public class AnimeCharacter implements Serializable {
 
     public void setUsers(Users users) {
         this.users = users;
+    }
+
+    public Long getIdOwner() {
+        return idOwner;
+    }
+
+    public void setIdOwner(Long idOwner) {
+        this.idOwner = idOwner;
+    }
+
+    public String getLegend() {
+        return legend;
+    }
+
+    public void setLegend(String legend) {
+        this.legend = legend;
     }
 }
