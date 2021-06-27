@@ -89,7 +89,7 @@ public class AnimeCharacterController {
         if (animeCharacter == null) {
             return ResponseEntity.notFound().build();
         }
-        animeCharacter.setShared(isShared);
+        animeCharacter.setShared(!isShared);
         return ResponseEntity.ok(animeCharacterRepository.save(animeCharacter));
     }
 }

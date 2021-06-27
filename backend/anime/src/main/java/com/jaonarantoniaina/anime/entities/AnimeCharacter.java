@@ -21,6 +21,7 @@ public class AnimeCharacter implements Serializable {
     @GeneratedValue
     private Long idAnime;
     private String animeName;
+    private String legend;
     private String category;
     private String strength;
     @Lob
@@ -95,5 +96,13 @@ public class AnimeCharacter implements Serializable {
 
     public void setIdOwner(Long idOwner) {
         this.idOwner = idOwner;
+    }
+
+    public String getLegend() {
+        return legend;
+    }
+
+    public void setLegend(String legend) {
+        this.legend = legend;
     }
 }

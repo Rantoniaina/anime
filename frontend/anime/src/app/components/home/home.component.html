@@ -26,18 +26,51 @@
     </nav>
   </div>
   <br />
+  <div class="row" *ngIf="errorMessage">
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+  <div class="row" *ngIf="successMessage">
+    <div class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+  </div>
   <div class="row">
     <div
       class="card"
       *ngFor="let car of animeCharacters"
       style="width: 18rem; margin-right: 30px"
     >
-      <div class="card-header bg-transparent">
+      <div *ngIf="car.idOwner !== -1">
         <div class="btn-group" role="group">
           <button type="button" class="btn btn-link">Edit</button>
           <button type="button" class="btn btn-link">Remove</button>
-          <button type="button" class="btn btn-link">Share</button>
+          <button
+            type="button"
+            class="btn btn-link"
+            *ngIf="car.shared === false"
+            (click)="shareCharacter(car.idAnime, car.shared)"
+          >
+            Share
+          </button>
+          <button
+            type="button"
+            class="btn btn-link"
+            *ngIf="car.shared === true"
+            (click)="shareCharacter(car.idAnime, car.shared)"
+          >
+            Unshare
+          </button>
         </div>
+      </div>
+      <div class="card-header bg-transparent" *ngIf="car.idOwner === -1">
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-block btn-link"
+        >
+          Shared
+        </button>
       </div>
       <img
         src="http://localhost:8080/v1/photo/character/{{ car.idAnime }}"
@@ -45,11 +78,10 @@
       />
       <div class="card-body">
         <h5 class="card-title">{{ car.animeName }}</h5>
-        <span class="badge badge-pill badge-primary">{{ car.category }}</span>
-        <br />
-        <span class="badge badge-pill badge-success" *ngIf="car.idOwner !== -1"
-          >Shared</span
-        >
+        <p class="card-text">{{ car.legend }}</p>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-pill badge-warning">{{ car.category }}</span>
       </div>
     </div>
   </div>

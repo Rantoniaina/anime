@@ -5,4 +5,5 @@ export class Character {
   strengh: string;
   shared: boolean;
   idOwner: number;
+  legend: string;
 }

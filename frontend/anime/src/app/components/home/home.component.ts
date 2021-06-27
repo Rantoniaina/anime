@@ -12,6 +12,8 @@ import { CharacterService } from 'src/app/services/character/character.service';
 export class HomeComponent implements OnInit {
   user: User;
   animeCharacters: Character[];
+  errorMessage: string;
+  successMessage: string;
 
   constructor(
     private characterService: CharacterService,
@@ -21,6 +23,20 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.findAllCharacters();
+  }
+
+  checkUser() {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser !== undefined && currentUser !== null) {
+      this.user = JSON.parse(currentUser);
+    } else {
+      this.router.navigate(['/login']);
+      return;
+    }
+  }
+
+  findAllCharacters() {
     this.characterService
       .findAllUserCharacters(this.user.idUsers)
       .pipe()
@@ -34,15 +50,41 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  checkUser() {
-    const currentUser = localStorage.getItem('currentUser');
-    if (currentUser !== undefined && currentUser !== null) {
-      console.log({ currentUser });
+  shareCharacter(idAnime: number, shared: boolean) {
+    if (idAnime === undefined) {
+      this.displayMessage(
+        'An error has occured while sharing the character',
+        2
+      );
+    }
+    this.characterService
+      .shareCharacter(idAnime, shared)
+      .pipe()
+      .subscribe(
+        (data) => {
+          this.displayMessage('Character was successfully updated', 1);
+          this.findAllCharacters();
+        },
+        (error) => {
+          this.displayMessage(
+            'An error has occured while sharing the character',
+            2
+          );
+        }
+      );
+  }
 
-      this.user = JSON.parse(currentUser);
-    } else {
-      this.router.navigate(['/login']);
-      return;
+  displayMessage(message: string, type: number) {
+    if (type === 1) {
+      this.successMessage = message;
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 5000);
+    } else if (type === 2) {
+      this.errorMessage = message;
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 5000);
     }
   }
 }
