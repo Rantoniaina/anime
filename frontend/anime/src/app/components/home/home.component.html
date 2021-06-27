@@ -1,12 +1,26 @@
 <div class="container">
-  <div class="container-fluid">
-    <input type="text" class="form-control" />
+  <div class="container">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img
+          src="http://localhost:8080/v1/photo/users/{{ user.idUsers }}"
+          width="50"
+          height="50"
+          class="d-inline-block align-top"
+        />
+        {{ user.firstName }}&nbsp; {{ user.lastName }}
+      </a>
+    </nav>
   </div>
-  <div class="container-fluid">
+  <br />
+  <div class="row">
+    <input type="text" class="form-control" placeholder="Search" />
+  </div>
+  <div class="row">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page">
-          <a href="#">Create</a>
+          <a href="#">Add new character</a>
         </li>
       </ol>
     </nav>
@@ -20,9 +34,9 @@
     >
       <div class="card-header bg-transparent">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-secondary">Edit</button>
-          <button type="button" class="btn btn-secondary">Delete</button>
-          <button type="button" class="btn btn-secondary">Share</button>
+          <button type="button" class="btn btn-link">Edit</button>
+          <button type="button" class="btn btn-link">Remove</button>
+          <button type="button" class="btn btn-link">Share</button>
         </div>
       </div>
       <img
@@ -32,6 +46,10 @@
       <div class="card-body">
         <h5 class="card-title">{{ car.animeName }}</h5>
         <span class="badge badge-pill badge-primary">{{ car.category }}</span>
+        <br />
+        <span class="badge badge-pill badge-success" *ngIf="car.idOwner !== -1"
+          >Shared</span
+        >
       </div>
     </div>
   </div>

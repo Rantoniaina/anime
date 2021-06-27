@@ -34,7 +34,7 @@ public class PhotoController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).contentType(MediaType.IMAGE_GIF).contentType(MediaType.IMAGE_PNG).body(new InputStreamResource((new ByteArrayInputStream(character.getPhoto()))));
     }
 
-    @GetMapping("/character/{idUser}")
+    @GetMapping("/users/{idUser}")
     public ResponseEntity photoUser(@PathVariable Long idUser) {
         if (idUser == null) {
             return ResponseEntity.badRequest().body("Cannot get photo photo with null ID");

@@ -8,4 +8,8 @@ import java.util.List;
 
 public interface IAnimeCharacter extends JpaRepository<AnimeCharacter, Long> {
     List<AnimeCharacter> findByUsersOrShared(Users users, boolean shared);
+
+    List<AnimeCharacter> findByUsers(Users users);
+
+    List<AnimeCharacter> findBySharedAndUsersIsNotIn(boolean shared, List<Users> users);
 }

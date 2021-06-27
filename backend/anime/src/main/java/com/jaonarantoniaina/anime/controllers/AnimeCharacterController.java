@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +36,15 @@ public class AnimeCharacterController {
         if (users.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-            return ResponseEntity.ok(animeCharacterRepository.findByUsersOrShared(users.get(), true));
+        List<Users> usersList = new ArrayList<>();
+        usersList.add(users.get());
+        List<AnimeCharacter> userCharacters = animeCharacterRepository.findByUsers(users.get());
+        List<AnimeCharacter> sharedCharacters = animeCharacterRepository.findBySharedAndUsersIsNotIn(true, usersList);
+        userCharacters.forEach(userCharacter -> userCharacter.setIdOwner(idUser));
+        sharedCharacters.forEach(sharedCharacter -> sharedCharacter.setIdOwner(-1L));
+        userCharacters.addAll(sharedCharacters);
+
+        return ResponseEntity.ok(userCharacters);
     }
 
     @GetMapping("/idAnime")

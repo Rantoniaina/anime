@@ -4,4 +4,5 @@ export class Character {
   category: string;
   strengh: string;
   shared: boolean;
+  idOwner: number;
 }

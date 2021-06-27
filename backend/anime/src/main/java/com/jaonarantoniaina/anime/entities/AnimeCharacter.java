@@ -26,6 +26,8 @@ public class AnimeCharacter implements Serializable {
     @Lob
     private byte[] photo;
     private boolean shared;
+    @Transient
+    private Long idOwner;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idUsers")
@@ -85,5 +87,13 @@ public class AnimeCharacter implements Serializable {
 
     public void setUsers(Users users) {
         this.users = users;
+    }
+
+    public Long getIdOwner() {
+        return idOwner;
+    }
+
+    public void setIdOwner(Long idOwner) {
+        this.idOwner = idOwner;
     }
 }
